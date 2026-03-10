@@ -130,7 +130,7 @@ export default function ProductDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Images */}
           <div>
-            <div className="relative bg-white rounded-lg overflow-hidden border border-sand/30 mb-4 cursor-zoom-in">
+            <div className="relative bg-white rounded-2xl overflow-hidden border border-sand/30 mb-6 cursor-zoom-in">
               {discount > 0 && <span className="badge-sale">-{discount}%</span>}
               <div className="aspect-square">
                 <img
@@ -148,8 +148,8 @@ export default function ProductDetail() {
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`w-20 h-20 rounded-md overflow-hidden border-2 transition-colors ${
-                      selectedImage === i ? 'border-terracotta' : 'border-sand/50 hover:border-sand'
+                    className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                      selectedImage === i ? 'border-terracotta scale-105 shadow-sm' : 'border-sand/50 hover:border-sand'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -162,7 +162,7 @@ export default function ProductDetail() {
           {/* Product info */}
           <div>
             <p className="text-sm text-terracotta uppercase tracking-wider mb-2">{product.artist}</p>
-            <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal mb-4">
+            <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 tracking-tight drop-shadow-sm">
               {product.name}
             </h1>
 
@@ -185,17 +185,17 @@ export default function ProductDetail() {
                 <span className="text-lg text-taupe line-through">{formatPrice(product.oldPrice)}</span>
               )}
               {discount > 0 && (
-                <span className="bg-terracotta/10 text-terracotta text-sm font-semibold px-2 py-1 rounded">
+                <span className="bg-terracotta/10 border border-terracotta/20 text-terracotta text-sm font-bold px-3 py-1 rounded-full shadow-sm">
                   -{discount}%
                 </span>
               )}
             </div>
 
             {/* Description */}
-            <p className="text-taupe leading-relaxed mb-6">{product.description}</p>
+            <p className="text-base md:text-lg text-taupe leading-relaxed mb-6 md:mb-8">{product.description}</p>
 
             {/* Specs */}
-            <div className="bg-warm-beige rounded-lg p-4 mb-6 space-y-2">
+            <div className="bg-white border border-sand/30 rounded-xl p-6 mb-8 space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-taupe">Chất liệu:</span>
                 <span className="text-charcoal font-medium">{product.material}</span>
@@ -208,7 +208,7 @@ export default function ProductDetail() {
                 <span className="text-taupe">Nghệ nhân:</span>
                 <span className="text-charcoal font-medium">{product.artist}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm pt-3 border-t border-sand/30">
                 <span className="text-taupe">Tình trạng:</span>
                 <span className={`font-medium ${product.inStock ? 'text-olive' : 'text-red-500'}`}>
                   {product.inStock ? 'Còn hàng' : 'Hết hàng'}
@@ -217,27 +217,27 @@ export default function ProductDetail() {
             </div>
 
             {/* Quantity & Add to cart */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <div className="flex items-center border border-sand rounded-md">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex items-center border border-sand rounded-full bg-white">
                 <button
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="px-4 py-3 text-charcoal hover:bg-warm-beige transition-colors"
+                  className="px-5 py-3 text-charcoal hover:bg-warm-beige rounded-l-full transition-colors"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="px-4 py-3 font-medium text-charcoal min-w-[50px] text-center">
+                <span className="px-2 py-3 font-medium text-charcoal min-w-[40px] text-center">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(q => q + 1)}
-                  className="px-4 py-3 text-charcoal hover:bg-warm-beige transition-colors"
+                  className="px-5 py-3 text-charcoal hover:bg-warm-beige rounded-r-full transition-colors"
                 >
                   <Plus size={16} />
                 </button>
               </div>
               <button
                 onClick={() => addToCart(product, quantity)}
-                className="btn-primary flex-1"
+                className="btn-primary flex-1 shadow-md hover:shadow-lg transition-all duration-300"
                 disabled={!product.inStock}
               >
                 <ShoppingCart size={18} className="mr-2" /> Thêm vào giỏ hàng
@@ -250,12 +250,15 @@ export default function ProductDetail() {
                 { icon: Truck, text: 'Miễn phí giao hàng' },
                 { icon: RefreshCw, text: 'Đổi trả 30 ngày' },
                 { icon: Award, text: 'Hàng chính hãng' },
-              ].map(({ icon: Icon, text }) => (
-                <div key={text} className="text-center">
-                  <Icon size={22} className="mx-auto mb-1 text-terracotta" />
-                  <p className="text-[11px] text-taupe">{text}</p>
-                </div>
-              ))}
+              ].map(({ icon: BadgeIcon, text }) => {
+                const IconComponent = BadgeIcon;
+                return (
+                  <div key={text} className="text-center">
+                    <IconComponent size={22} className="mx-auto mb-1 text-terracotta" />
+                    <p className="text-[11px] text-taupe">{text}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -284,16 +287,16 @@ export default function ProductDetail() {
 
           <div className="py-6 md:py-8">
             {activeTab === 'description' && (
-              <div className="prose max-w-none text-taupe leading-relaxed">
-                <p>{product.description}</p>
-                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-warm-beige p-4 rounded-lg">
-                    <h4 className="font-heading font-semibold text-charcoal mb-2">Chất liệu</h4>
-                    <p className="text-sm">{product.material}</p>
+              <div className="text-taupe leading-relaxed">
+                <p className="text-base md:text-lg mb-6 md:mb-8">{product.description}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
+                  <div className="bg-warm-beige p-5 md:p-6 rounded-xl">
+                    <h4 className="font-heading font-semibold text-charcoal mb-2 md:mb-3 text-lg md:text-xl">Chất liệu</h4>
+                    <p className="text-base md:text-lg">{product.material}</p>
                   </div>
-                  <div className="bg-warm-beige p-4 rounded-lg">
-                    <h4 className="font-heading font-semibold text-charcoal mb-2">Kích thước</h4>
-                    <p className="text-sm">{product.dimensions}</p>
+                  <div className="bg-warm-beige p-5 md:p-6 rounded-xl">
+                    <h4 className="font-heading font-semibold text-charcoal mb-2 md:mb-3 text-lg md:text-xl">Kích thước</h4>
+                    <p className="text-base md:text-lg">{product.dimensions}</p>
                   </div>
                 </div>
               </div>
@@ -312,12 +315,12 @@ export default function ProductDetail() {
                       </div>
                       <span className="text-xs text-taupe">{review.date}</span>
                     </div>
-                    <div className="star-rating flex gap-0.5 mb-2">
+                    <div className="star-rating flex gap-0.5 mb-3">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={12} className={i < review.rating ? 'fill-current' : 'opacity-30'} />
+                        <Star key={i} size={14} className={i < review.rating ? 'fill-current' : 'opacity-30'} />
                       ))}
                     </div>
-                    <p className="text-sm text-taupe">{review.comment}</p>
+                    <p className="text-base md:text-lg text-taupe leading-relaxed">{review.comment}</p>
                   </div>
                 )) : (
                   <p className="text-taupe text-center py-8">Chưa có đánh giá nào cho sản phẩm này.</p>
@@ -326,21 +329,21 @@ export default function ProductDetail() {
             )}
 
             {activeTab === 'shipping' && (
-              <div className="text-taupe leading-relaxed space-y-4">
-                <div className="bg-warm-beige p-4 rounded-lg">
-                  <h4 className="font-heading font-semibold text-charcoal mb-2 flex items-center gap-2"><Truck size={18} className="text-terracotta" /> Giao hàng</h4>
-                  <ul className="text-sm space-y-1 list-disc pl-5">
-                    <li>Miễn phí giao hàng cho đơn từ 2.000.000đ</li>
-                    <li>Giao hàng toàn quốc trong 3-5 ngày làm việc</li>
-                    <li>Đóng gói cẩn thận, bảo vệ sản phẩm tối đa</li>
+              <div className="text-taupe leading-relaxed space-y-4 md:space-y-6">
+                <div className="bg-warm-beige p-5 md:p-6 rounded-xl">
+                  <h4 className="font-heading font-semibold text-charcoal mb-3 md:mb-4 flex items-center gap-2 text-lg md:text-xl"><Truck size={20} className="text-terracotta" /> Giao hàng</h4>
+                  <ul className="text-base md:text-lg space-y-2 list-disc pl-6 mb-4">
+                    <li className="mb-2">Miễn phí giao hàng cho đơn từ 2.000.000đ</li>
+                    <li className="mb-2">Giao hàng toàn quốc trong 3-5 ngày làm việc</li>
+                    <li className="mb-0">Đóng gói cẩn thận, bảo vệ sản phẩm tối đa</li>
                   </ul>
                 </div>
-                <div className="bg-warm-beige p-4 rounded-lg">
-                  <h4 className="font-heading font-semibold text-charcoal mb-2 flex items-center gap-2"><RefreshCw size={18} className="text-terracotta" /> Đổi trả</h4>
-                  <ul className="text-sm space-y-1 list-disc pl-5">
-                    <li>Đổi trả miễn phí trong 30 ngày</li>
-                    <li>Hoàn tiền 100% nếu sản phẩm bị lỗi</li>
-                    <li>Liên hệ hotline để được hỗ trợ nhanh nhất</li>
+                <div className="bg-warm-beige p-5 md:p-6 rounded-xl">
+                  <h4 className="font-heading font-semibold text-charcoal mb-3 md:mb-4 flex items-center gap-2 text-lg md:text-xl"><RefreshCw size={20} className="text-terracotta" /> Đổi trả</h4>
+                  <ul className="text-base md:text-lg space-y-2 list-disc pl-6 mb-4">
+                    <li className="mb-2">Đổi trả miễn phí trong 30 ngày</li>
+                    <li className="mb-2">Hoàn tiền 100% nếu sản phẩm bị lỗi</li>
+                    <li className="mb-0">Liên hệ hotline để được hỗ trợ nhanh nhất</li>
                   </ul>
                 </div>
               </div>

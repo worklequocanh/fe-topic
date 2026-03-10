@@ -93,7 +93,7 @@ export default function Home() {
             <div className="w-16 h-0.5 bg-terracotta mx-auto mt-4" />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 scroll-reveal">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8 scroll-reveal">
             {categories.map(cat => (
               <CategoryCard key={cat.id} category={cat} />
             ))}
@@ -106,13 +106,13 @@ export default function Home() {
         <div className="container-custom">
           <div className="text-center mb-8 md:mb-12 scroll-reveal">
             <p className="text-terracotta text-sm uppercase tracking-widest mb-2">Được yêu thích</p>
-            <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal">
               Sản Phẩm Nổi Bật
             </h2>
             <div className="w-16 h-0.5 bg-terracotta mx-auto mt-4" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 scroll-reveal">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 scroll-reveal">
             {featuredProducts.slice(0, 8).map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -131,16 +131,16 @@ export default function Home() {
         <div className="container-custom">
           <div className="text-center mb-8 md:mb-12 scroll-reveal">
             <p className="text-terracotta text-sm uppercase tracking-widest mb-2">Đội ngũ</p>
-            <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal">
               Nghệ Nhân Của Chúng Tôi
             </h2>
             <div className="w-16 h-0.5 bg-terracotta mx-auto mt-4" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 scroll-reveal">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 scroll-reveal">
             {artists.map(artist => (
-              <div key={artist.id} className="card-hover bg-white rounded-lg overflow-hidden shadow-sm border border-sand/30 text-center p-6">
-                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-warm-beige">
+              <div key={artist.id} className="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-sand/30 text-center p-8 group">
+                <div className="w-28 h-28 rounded-full overflow-hidden mx-auto mb-5 border-4 border-warm-beige group-hover:border-terracotta/30 transition-colors duration-500">
                   <img
                     src={artist.avatar}
                     alt={artist.name}
@@ -149,9 +149,9 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="font-heading text-lg font-semibold text-charcoal">{artist.name}</h3>
-                <p className="text-sm text-terracotta mb-2">{artist.specialty}</p>
-                <p className="text-xs text-taupe mb-2">{artist.experience} kinh nghiệm</p>
-                <p className="text-sm text-taupe leading-relaxed">{artist.bio}</p>
+                <p className="text-sm md:text-base text-terracotta mb-2">{artist.specialty}</p>
+                <p className="text-xs md:text-sm text-taupe mb-3">{artist.experience} kinh nghiệm</p>
+                <p className="text-sm md:text-base text-taupe leading-relaxed">{artist.bio}</p>
               </div>
             ))}
           </div>
@@ -171,23 +171,23 @@ export default function Home() {
 
           <div className="max-w-2xl mx-auto scroll-reveal">
             {testimonials.length > 0 && (
-              <div className="bg-white rounded-xl p-8 shadow-sm border border-sand/30 text-center relative">
+              <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-sand/30 text-center relative">
                 <div className="text-4xl text-terracotta/30 font-heading mb-4">"</div>
                 <div className="transition-all duration-500">
-                  <p className="text-charcoal leading-relaxed mb-6 italic">
+                  <p className="text-base md:text-lg text-charcoal leading-relaxed mb-6 italic">
                     {testimonials[currentTestimonial]?.comment}
                   </p>
-                  <div className="flex items-center justify-center gap-3">
+                  <div className="flex items-center justify-center gap-3 md:gap-4">
                     <img
                       src={testimonials[currentTestimonial]?.avatar}
                       alt={testimonials[currentTestimonial]?.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-warm-beige"
+                      className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-warm-beige"
                     />
                     <div className="text-left">
-                      <p className="font-semibold text-charcoal text-sm">
+                      <p className="font-semibold text-charcoal text-sm md:text-base">
                         {testimonials[currentTestimonial]?.name}
                       </p>
-                      <p className="text-xs text-taupe">
+                      <p className="text-xs md:text-sm text-taupe">
                         {testimonials[currentTestimonial]?.role}
                       </p>
                     </div>
@@ -221,10 +221,10 @@ export default function Home() {
       <section className="section-padding bg-charcoal text-white">
         <div className="container-custom text-center scroll-reveal">
           <p className="text-terracotta text-sm uppercase tracking-widest mb-2">Đừng bỏ lỡ</p>
-          <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
             Đăng Ký Nhận Tin Mới
           </h2>
-          <p className="text-white/60 mb-8 max-w-md mx-auto">
+          <p className="text-white/80 text-base md:text-lg mb-8 md:mb-10 max-w-md mx-auto">
             Nhận thông báo về sản phẩm mới, ưu đãi đặc biệt và câu chuyện của nghệ nhân.
           </p>
           <form

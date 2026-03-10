@@ -112,10 +112,13 @@ export default function Contact() {
       <div className="bg-warm-beige py-8 md:py-12">
         <div className="container-custom text-center">
           <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal">
-            Liên Hệ
+            Liên Hệ Với Chúng Tôi
           </h1>
-          <p className="text-taupe mt-2 text-sm md:text-base">
-            Chúng tôi luôn sẵn lòng lắng nghe bạn
+          <div className="w-16 h-0.5 bg-terracotta mt-4 mb-6" />
+          <p className="text-taupe leading-relaxed mb-6">
+            Bạn có câu hỏi, đề xuất hay cần hỗ trợ? Hãy điền vào form bên dưới hoặc liên hệ 
+            trực tiếp qua các kênh thông tin của ArtisanVN. Chúng tôi luôn sẵn lòng lắng nghe 
+            và sẽ phản hồi trong thời gian sớm nhất.
           </p>
         </div>
       </div>
@@ -176,8 +179,8 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Nguyễn Văn A"
-                      className={`w-full px-4 py-2.5 border rounded-md bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-colors ${
-                        errors.name ? 'border-red-400' : 'border-sand focus:border-terracotta'
+                      className={`w-full px-5 py-3 border rounded-xl bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-all duration-300 ${
+                        errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-400/20' : 'border-sand focus:border-terracotta focus:ring-2 focus:ring-terracotta/20'
                       }`}
                     />
                     {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
@@ -194,8 +197,8 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="email@example.com"
-                      className={`w-full px-4 py-2.5 border rounded-md bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-colors ${
-                        errors.email ? 'border-red-400' : 'border-sand focus:border-terracotta'
+                      className={`w-full px-5 py-3 border rounded-xl bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-all duration-300 ${
+                        errors.email ? 'border-red-400 focus:ring-2 focus:ring-red-400/20' : 'border-sand focus:border-terracotta focus:ring-2 focus:ring-terracotta/20'
                       }`}
                     />
                     {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
@@ -214,8 +217,8 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="0123 456 789"
-                      className={`w-full px-4 py-2.5 border rounded-md bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-colors ${
-                        errors.phone ? 'border-red-400' : 'border-sand focus:border-terracotta'
+                      className={`w-full px-5 py-3 border rounded-xl bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-all duration-300 ${
+                        errors.phone ? 'border-red-400 focus:ring-2 focus:ring-red-400/20' : 'border-sand focus:border-terracotta focus:ring-2 focus:ring-terracotta/20'
                       }`}
                     />
                     {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
@@ -232,8 +235,8 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="Chủ đề tin nhắn"
-                      className={`w-full px-4 py-2.5 border rounded-md bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-colors ${
-                        errors.subject ? 'border-red-400' : 'border-sand focus:border-terracotta'
+                      className={`w-full px-5 py-3 border rounded-xl bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-all duration-300 ${
+                        errors.subject ? 'border-red-400 focus:ring-2 focus:ring-red-400/20' : 'border-sand focus:border-terracotta focus:ring-2 focus:ring-terracotta/20'
                       }`}
                     />
                     {errors.subject && <p className="text-xs text-red-500 mt-1">{errors.subject}</p>}
@@ -251,8 +254,8 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={5}
                     placeholder="Nhập nội dung tin nhắn..."
-                    className={`w-full px-4 py-2.5 border rounded-md bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-colors resize-vertical ${
-                      errors.message ? 'border-red-400' : 'border-sand focus:border-terracotta'
+                    className={`w-full px-5 py-3 border rounded-xl bg-white text-charcoal placeholder:text-taupe/50 focus:outline-none transition-all duration-300 resize-y ${
+                      errors.message ? 'border-red-400 focus:ring-2 focus:ring-red-400/20' : 'border-sand focus:border-terracotta focus:ring-2 focus:ring-terracotta/20'
                     }`}
                   />
                   {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
