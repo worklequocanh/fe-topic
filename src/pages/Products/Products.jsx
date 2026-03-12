@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import { db } from '../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import $ from 'jquery';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { Search, SlidersHorizontal, ChevronDown, Filter, X } from 'lucide-react';
+import { Search, SlidersHorizontal, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Filter, X, PackageSearch } from 'lucide-react';
+import './Products.css';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -24,12 +26,12 @@ export default function Products() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsRes, categoriesRes] = await Promise.all([
-          axios.get('/api/products'),
-          axios.get('/api/categories'),
+        const [productsSnap, categoriesSnap] = await Promise.all([
+          getDocs(collection(db, 'products')),
+          getDocs(collection(db, 'categories')),
         ]);
-        setProducts(productsRes.data);
-        setCategories(categoriesRes.data);
+        setProducts(productsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setCategories(categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -141,14 +143,11 @@ export default function Products() {
     }
   };
 
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-sand border-t-terracotta rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-taupe">Đang tải sản phẩm...</p>
-        </div>
+      <div className="products-loading">
+        <div className="products-spinner" />
+        <p>Đang tải sản phẩm...</p>
       </div>
     );
   }
@@ -156,65 +155,54 @@ export default function Products() {
   return (
     <div>
       {/* Page header */}
-      <div className="bg-warm-beige py-8 md:py-12">
-        <div className="container-custom">
-          <h1 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal text-center">
-            Sản Phẩm
-          </h1>
-          <p className="text-taupe text-center mt-2 text-sm md:text-base">
-            Khám phá bộ sưu tập nghệ thuật thủ công cao cấp
-          </p>
+      <div className="products-page-header">
+        <div className="container">
+          <h1 className="products-page-title">Sản Phẩm</h1>
+          <p className="products-page-subtitle">Khám phá bộ sưu tập nghệ thuật thủ công cao cấp</p>
         </div>
       </div>
 
-      <div className="container-custom section-padding">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="container section-padding">
+        <div className="products-layout">
           {/* Filter sidebar */}
-          <div className="lg:w-64 flex-shrink-0">
+          <div className="products-sidebar">
             {/* Mobile filter toggle */}
-            <button
-              onClick={toggleFilter}
-              className="lg:hidden w-full flex items-center justify-between bg-white border border-sand rounded-md px-4 py-3 mb-4 text-sm font-medium text-charcoal"
-            >
-              <span className="flex items-center gap-2"><Filter size={16} /> Bộ lọc</span>
-              <span className="text-taupe">{filterOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
+            <button onClick={toggleFilter} className="products-filter-toggle">
+              <span className="products-filter-toggle-label">
+                <Filter size={16} /> Bộ lọc
+              </span>
+              <span>{filterOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
             </button>
 
             <div
               id="filter-sidebar"
-              className="bg-white rounded-2xl border border-sand/50 p-6 space-y-8 shadow-sm"
+              className="products-filter-box"
               style={{ display: window.innerWidth >= 1024 ? 'block' : filterOpen ? 'block' : 'none' }}
             >
               {/* Search */}
-              <div>
-                <h3 className="font-heading text-sm font-semibold text-charcoal mb-3 uppercase tracking-wider">
-                  Tìm kiếm
-                </h3>
-                <form onSubmit={handleSearch} className="flex gap-2">
-                  <div className="relative flex-1">
-                    <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-taupe/60" />
+              <div className="filter-section">
+                <h3 className="filter-section-title">Tìm kiếm</h3>
+                <form onSubmit={handleSearch} className="filter-search-form">
+                  <div className="filter-search-wrap">
+                    <Search size={16} className="filter-search-icon" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Tên sản phẩm..."
-                      className="w-full pl-10 pr-3 py-2.5 border border-sand rounded-xl text-sm bg-cream focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta/20 transition-all"
+                      className="filter-search-input"
                     />
                   </div>
                 </form>
               </div>
 
               {/* Categories */}
-              <div>
-                <h3 className="font-heading text-sm font-semibold text-charcoal mb-3 uppercase tracking-wider">
-                  Danh mục
-                </h3>
-                <div className="space-y-1">
+              <div className="filter-section">
+                <h3 className="filter-section-title">Danh mục</h3>
+                <div className="filter-options">
                   <button
                     onClick={() => handleCategoryChange('')}
-                    className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
-                      !selectedCategory ? 'bg-terracotta/10 text-terracotta font-medium' : 'text-taupe hover:text-charcoal hover:bg-warm-beige'
-                    }`}
+                    className={`filter-option-btn ${!selectedCategory ? 'active' : ''}`}
                   >
                     Tất cả ({products.length})
                   </button>
@@ -222,9 +210,7 @@ export default function Products() {
                     <button
                       key={cat.slug}
                       onClick={() => handleCategoryChange(cat.slug)}
-                      className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-300 ${
-                        selectedCategory === cat.slug ? 'bg-terracotta text-white font-medium shadow-sm' : 'text-taupe hover:text-charcoal hover:bg-warm-beige'
-                      }`}
+                      className={`filter-option-btn ${selectedCategory === cat.slug ? 'active' : ''}`}
                     >
                       {cat.name} ({cat.productCount})
                     </button>
@@ -233,11 +219,9 @@ export default function Products() {
               </div>
 
               {/* Price range */}
-              <div>
-                <h3 className="font-heading text-sm font-semibold text-charcoal mb-3 uppercase tracking-wider">
-                  Khoảng giá
-                </h3>
-                <div className="space-y-1">
+              <div className="filter-section">
+                <h3 className="filter-section-title">Khoảng giá</h3>
+                <div className="filter-options">
                   {[
                     { value: 'all', label: 'Tất cả' },
                     { value: 'under-2m', label: 'Dưới 2.000.000đ' },
@@ -248,9 +232,7 @@ export default function Products() {
                     <button
                       key={range.value}
                       onClick={() => { setPriceRange(range.value); setCurrentPage(1); }}
-                      className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-300 ${
-                        priceRange === range.value ? 'bg-terracotta text-white font-medium shadow-sm' : 'text-taupe hover:text-charcoal hover:bg-warm-beige'
-                      }`}
+                      className={`filter-option-btn ${priceRange === range.value ? 'active' : ''}`}
                     >
                       {range.label}
                     </button>
@@ -259,29 +241,26 @@ export default function Products() {
               </div>
 
               {/* Clear filters */}
-              <button
-                onClick={clearFilters}
-                className="w-full text-center text-sm text-terracotta hover:underline"
-              >
+              <button onClick={clearFilters} className="filter-clear-btn">
                 Xóa bộ lọc
               </button>
             </div>
           </div>
 
           {/* Products area */}
-          <div className="flex-1">
+          <div className="products-main">
             {/* Sort bar */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-sand/50">
-              <p className="text-sm text-taupe">
-                Hiển thị <strong className="text-charcoal">{filteredProducts.length}</strong> sản phẩm
+            <div className="products-sort-bar">
+              <p className="products-count">
+                Hiển thị <strong>{filteredProducts.length}</strong> sản phẩm
               </p>
-              <div className="flex items-center gap-3">
-                <label className="text-sm text-taupe hidden sm:inline">Sắp xếp:</label>
-                <div className="relative">
+              <div className="products-sort-wrap">
+                <label className="products-sort-label">Sắp xếp:</label>
+                <div className="products-sort-select-wrap">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none pl-4 pr-10 py-2.5 border border-sand rounded-xl text-sm bg-white text-charcoal focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta/20 cursor-pointer shadow-sm transition-all"
+                    className="products-sort-select"
                   >
                     <option value="default">Mặc định</option>
                     <option value="price-asc">Giá: Thấp → Cao</option>
@@ -289,28 +268,24 @@ export default function Products() {
                     <option value="name">Tên A-Z</option>
                     <option value="rating">Đánh giá cao nhất</option>
                   </select>
-                  <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-taupe pointer-events-none" />
+                  <ChevronDown size={16} className="products-sort-chevron" />
                 </div>
               </div>
             </div>
 
             {/* Product grid */}
             {paginatedProducts.length > 0 ? (
-              <div className="product-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+              <div className="product-grid">
                 {paginatedProducts.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16">
-                <PackageSearch size={48} className="mx-auto mb-4 text-taupe" />
-                <p className="text-lg font-heading font-semibold text-charcoal mb-2">
-                  Không tìm thấy sản phẩm
-                </p>
-                <p className="text-taupe text-sm mb-4">
-                  Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm
-                </p>
-                <button onClick={clearFilters} className="btn-outline !text-sm !py-2 !px-4">
+              <div className="products-empty">
+                <PackageSearch size={48} className="products-empty-icon" />
+                <p className="products-empty-title">Không tìm thấy sản phẩm</p>
+                <p className="products-empty-desc">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</p>
+                <button onClick={clearFilters} className="btn-outline products-empty-btn">
                   Xóa bộ lọc
                 </button>
               </div>
@@ -318,11 +293,11 @@ export default function Products() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-8">
+              <div className="products-pagination">
                 <button
                   onClick={() => { setCurrentPage(prev => Math.max(prev - 1, 1)); $('html, body').animate({ scrollTop: 0 }, 300); }}
                   disabled={currentPage === 1}
-                  className="px-3 py-2 flex items-center gap-1 border border-sand rounded text-sm text-charcoal hover:bg-warm-beige disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="pagination-btn"
                 >
                   <ChevronLeft size={16} /> Trước
                 </button>
@@ -330,11 +305,7 @@ export default function Products() {
                   <button
                     key={i + 1}
                     onClick={() => { setCurrentPage(i + 1); $('html, body').animate({ scrollTop: 0 }, 300); }}
-                    className={`w-10 h-10 rounded text-sm font-medium transition-colors ${
-                      currentPage === i + 1
-                        ? 'bg-terracotta text-white'
-                        : 'border border-sand text-charcoal hover:bg-warm-beige'
-                    }`}
+                    className={`pagination-num-btn ${currentPage === i + 1 ? 'active' : ''}`}
                   >
                     {i + 1}
                   </button>
@@ -342,7 +313,7 @@ export default function Products() {
                 <button
                   onClick={() => { setCurrentPage(prev => Math.min(prev + 1, totalPages)); $('html, body').animate({ scrollTop: 0 }, 300); }}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-2 flex items-center gap-1 border border-sand rounded text-sm text-charcoal hover:bg-warm-beige disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="pagination-btn"
                 >
                   Sau <ChevronRight size={16} />
                 </button>

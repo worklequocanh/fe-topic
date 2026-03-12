@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
+import { db } from '../../firebase';
+import { collection, getDocs, query, where, limit, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import $ from 'jquery';
 import HeroBanner from '../../components/HeroBanner/HeroBanner';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import CategoryCard from '../../components/CategoryCard/CategoryCard';
-import 'lucide-react';
+import { Star } from 'lucide-react';
+import './Home.css';
+import { seedData } from '../../firebase/seedData';
 
 export default function Home() {
   const [banners, setBanners] = useState([]);
@@ -16,29 +19,67 @@ export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  const location = useLocation();
+
   useEffect(() => {
+    const uploadSampleData = async () => {
+      const params = new URLSearchParams(location.search);
+      const forceReseed = params.get('reseed') === 'true';
+
+      // Check if products collection is empty or force reseed
+      const checkProducts = await getDocs(query(collection(db, 'products'), limit(1)));
+      
+      if (checkProducts.empty || forceReseed) {
+        console.log(forceReseed ? "Re-seeding data..." : "Database is empty. Initializing seed data...");
+        
+        // If re-seeding, we should ideally clear existing data. 
+        // Simple version: just add. Better version: clear collections.
+        if (forceReseed) {
+          const collectionsToClear = Object.keys(seedData);
+          for (const colName of collectionsToClear) {
+            const snap = await getDocs(collection(db, colName));
+            for (const d of snap.docs) {
+              await deleteDoc(doc(db, colName, d.id));
+            }
+          }
+        }
+
+        for (const [colName, items] of Object.entries(seedData)) {
+          console.log(`Seeding collection: ${colName}...`);
+          for (const item of items) {
+            await addDoc(collection(db, colName), item);
+          }
+        }
+        console.log("Seed data initialized successfully!");
+        // Remove the reseed param and reload
+        window.location.href = window.location.origin + window.location.pathname;
+      }
+    };
+
     const fetchData = async () => {
       try {
-        const [bannersRes, categoriesRes, productsRes, artistsRes, testimonialsRes] = await Promise.all([
-          axios.get('/api/banners'),
-          axios.get('/api/categories'),
-          axios.get('/api/products'),
-          axios.get('/api/artists'),
-          axios.get('/api/testimonials'),
+        await uploadSampleData();
+        const [bannersSnap, categoriesSnap, productsSnap, artistsSnap, testimonialsSnap] = await Promise.all([
+          getDocs(collection(db, 'banners')),
+          getDocs(collection(db, 'categories')),
+          getDocs(query(collection(db, 'products'), where('featured', '==', true), limit(8))),
+          getDocs(collection(db, 'artists')),
+          getDocs(collection(db, 'testimonials')),
         ]);
-        setBanners(bannersRes.data);
-        setCategories(categoriesRes.data);
-        setFeaturedProducts(productsRes.data.filter(p => p.featured));
-        setArtists(artistsRes.data);
-        setTestimonials(testimonialsRes.data);
+
+        setBanners(bannersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setCategories(categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setFeaturedProducts(productsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setArtists(artistsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        setTestimonials(testimonialsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data from Firebase:', error);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [location.search]);
 
   // jQuery: testimonial carousel
   useEffect(() => {
@@ -68,11 +109,9 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-sand border-t-terracotta rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-taupe">Đang tải...</p>
-        </div>
+      <div className="home-loading">
+        <div className="home-spinner" />
+        <p>Đang tải...</p>
       </div>
     );
   }
@@ -83,17 +122,15 @@ export default function Home() {
       <HeroBanner banners={banners} />
 
       {/* Categories Section */}
-      <section className="section-padding bg-cream">
-        <div className="container-custom">
-          <div className="text-center mb-10 md:mb-16 scroll-reveal">
-            <p className="text-terracotta text-sm md:text-base uppercase tracking-widest mb-3">Bộ sưu tập</p>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal">
-              Danh Mục Nổi Bật
-            </h2>
-            <div className="w-16 md:w-24 h-0.5 md:h-1 bg-terracotta mx-auto mt-5 md:mt-6" />
+      <section className="section-categories">
+        <div className="container">
+          <div className="section-header scroll-reveal">
+            <p className="section-eyebrow">Bộ sưu tập</p>
+            <h2 className="section-title">Danh Mục Nổi Bật</h2>
+            <div className="section-divider" />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8 scroll-reveal">
+          <div className="categories-grid scroll-reveal">
             {categories.map(cat => (
               <CategoryCard key={cat.id} category={cat} />
             ))}
@@ -102,23 +139,21 @@ export default function Home() {
       </section>
 
       {/* Featured Products Section */}
-      <section className="section-padding bg-warm-beige">
-        <div className="container-custom">
-          <div className="text-center mb-10 md:mb-16 scroll-reveal">
-            <p className="text-terracotta text-sm md:text-base uppercase tracking-widest mb-3">Được yêu thích</p>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal">
-              Sản Phẩm Nổi Bật
-            </h2>
-            <div className="w-16 md:w-24 h-0.5 md:h-1 bg-terracotta mx-auto mt-5 md:mt-6" />
+      <section className="section-featured">
+        <div className="container">
+          <div className="section-header scroll-reveal">
+            <p className="section-eyebrow">Được yêu thích</p>
+            <h2 className="section-title">Sản Phẩm Nổi Bật</h2>
+            <div className="section-divider" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10 scroll-reveal">
+          <div className="featured-grid scroll-reveal">
             {featuredProducts.slice(0, 8).map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
-          <div className="text-center mt-8 md:mt-12 scroll-reveal">
+          <div className="featured-cta scroll-reveal">
             <Link to="/products" className="btn-outline">
               Xem Tất Cả Sản Phẩm →
             </Link>
@@ -127,31 +162,29 @@ export default function Home() {
       </section>
 
       {/* About Artists Section */}
-      <section className="section-padding bg-cream">
-        <div className="container-custom">
-          <div className="text-center mb-10 md:mb-16 scroll-reveal">
-            <p className="text-terracotta text-sm md:text-base uppercase tracking-widest mb-3">Đội ngũ</p>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal">
-              Nghệ Nhân Của Chúng Tôi
-            </h2>
-            <div className="w-16 md:w-24 h-0.5 md:h-1 bg-terracotta mx-auto mt-5 md:mt-6" />
+      <section className="section-artists">
+        <div className="container">
+          <div className="section-header scroll-reveal">
+            <p className="section-eyebrow">Đội ngũ</p>
+            <h2 className="section-title">Nghệ Nhân Của Chúng Tôi</h2>
+            <div className="section-divider" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10 scroll-reveal">
+          <div className="artists-grid scroll-reveal">
             {artists.map(artist => (
-              <div key={artist.id} className="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-sand/30 text-center p-8 md:p-10 group">
-                <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden mx-auto mb-6 border-4 border-warm-beige group-hover:border-terracotta/30 transition-colors duration-500">
+              <div key={artist.id} className="artist-card">
+                <div className="artist-avatar-wrap">
                   <img
                     src={artist.avatar}
                     alt={artist.name}
-                    className="w-full h-full object-cover"
+                    className="artist-avatar"
                     loading="lazy"
                   />
                 </div>
-                <h3 className="font-heading text-xl md:text-2xl font-semibold text-charcoal mb-2">{artist.name}</h3>
-                <p className="text-sm md:text-base text-terracotta mb-2">{artist.specialty}</p>
-                <p className="text-xs md:text-sm text-taupe mb-3">{artist.experience} kinh nghiệm</p>
-                <p className="text-sm md:text-base text-taupe leading-relaxed">{artist.bio}</p>
+                <h3 className="artist-name">{artist.name}</h3>
+                <p className="artist-specialty">{artist.specialty}</p>
+                <p className="artist-experience">{artist.experience} kinh nghiệm</p>
+                <p className="artist-bio">{artist.bio}</p>
               </div>
             ))}
           </div>
@@ -159,55 +192,51 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="section-padding bg-warm-beige">
-        <div className="container-custom">
-          <div className="text-center mb-8 md:mb-12 scroll-reveal">
-            <p className="text-terracotta text-sm uppercase tracking-widest mb-2">Khách hàng nói gì</p>
-            <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-charcoal">
-              Đánh Giá Từ Khách Hàng
-            </h2>
-            <div className="w-16 h-0.5 bg-terracotta mx-auto mt-4" />
+      <section className="section-testimonials">
+        <div className="container">
+          <div className="section-header scroll-reveal">
+            <p className="section-eyebrow">Khách hàng nói gì</p>
+            <h2 className="section-title">Đánh Giá Từ Khách Hàng</h2>
+            <div className="section-divider" />
           </div>
 
-          <div className="max-w-2xl mx-auto scroll-reveal">
+          <div className="testimonial-wrap scroll-reveal">
             {testimonials.length > 0 && (
-              <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-sand/30 text-center relative">
-                <div className="text-4xl text-terracotta/30 font-heading mb-4">"</div>
-                <div className="transition-all duration-500">
-                  <p className="text-base md:text-lg text-charcoal leading-relaxed mb-6 italic">
+              <div className="testimonial-card">
+                <div className="testimonial-quote">"</div>
+                <div>
+                  <p className="testimonial-comment">
                     {testimonials[currentTestimonial]?.comment}
                   </p>
-                  <div className="flex items-center justify-center gap-3 md:gap-4">
+                  <div className="testimonial-author">
                     <img
                       src={testimonials[currentTestimonial]?.avatar}
                       alt={testimonials[currentTestimonial]?.name}
-                      className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-warm-beige"
+                      className="testimonial-avatar"
                     />
-                    <div className="text-left">
-                      <p className="font-semibold text-charcoal text-sm md:text-base">
+                    <div className="testimonial-author-info">
+                      <p className="testimonial-name">
                         {testimonials[currentTestimonial]?.name}
                       </p>
-                      <p className="text-xs md:text-sm text-taupe">
+                      <p className="testimonial-role">
                         {testimonials[currentTestimonial]?.role}
                       </p>
                     </div>
                   </div>
-                  <div className="star-rating mt-3 flex justify-center gap-1.5 align-middle">
+                  <div className="testimonial-stars">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={14} className="fill-current text-terracotta/80" />
+                      <Star key={i} size={14} className="pd-star active" />
                     ))}
                   </div>
                 </div>
 
                 {/* Dots */}
-                <div className="flex justify-center gap-2 mt-6">
+                <div className="testimonial-dots">
                   {testimonials.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setCurrentTestimonial(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        i === currentTestimonial ? 'bg-terracotta w-6' : 'bg-sand'
-                      }`}
+                      className={`testimonial-dot ${i === currentTestimonial ? 'active' : ''}`}
                     />
                   ))}
                 </div>
@@ -218,28 +247,28 @@ export default function Home() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="section-padding bg-charcoal text-white">
-        <div className="container-custom text-center scroll-reveal">
-          <p className="text-terracotta text-sm uppercase tracking-widest mb-2">Đừng bỏ lỡ</p>
-          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
-            Đăng Ký Nhận Tin Mới
-          </h2>
-          <p className="text-white/80 text-base md:text-lg mb-8 md:mb-10 max-w-md mx-auto">
-            Nhận thông báo về sản phẩm mới, ưu đãi đặc biệt và câu chuyện của nghệ nhân.
-          </p>
-          <form
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Nhập email của bạn"
-              className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-md text-white placeholder:text-white/40 focus:outline-none focus:border-terracotta transition-colors"
-            />
-            <button type="submit" className="btn-primary !bg-terracotta">
-              Đăng Ký
-            </button>
-          </form>
+      <section className="section-newsletter">
+        <div className="container">
+          <div className="newsletter-wrap scroll-reveal">
+            <p className="newsletter-eyebrow">Đừng bỏ lỡ</p>
+            <h2 className="newsletter-title">Đăng Ký Nhận Tin Mới</h2>
+            <p className="newsletter-desc">
+              Nhận thông báo về sản phẩm mới, ưu đãi đặc biệt và câu chuyện của nghệ nhân.
+            </p>
+            <form
+              className="newsletter-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                type="email"
+                placeholder="Nhập email của bạn"
+                className="newsletter-input"
+              />
+              <button type="submit" className="btn-primary">
+                Đăng Ký
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     </div>
