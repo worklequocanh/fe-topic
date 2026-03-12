@@ -26,6 +26,7 @@ export default function AdminLayout() {
   const menuItems = [
     { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Tổng quan' },
     { path: '/admin/products', icon: Package, label: 'Sản phẩm' },
+    { path: '/admin/categories', icon: Layout, label: 'Danh mục' },
     { path: '/admin/orders', icon: ShoppingCart, label: 'Đơn hàng' },
     { path: '/admin/promotions', icon: Tag, label: 'Khuyến mãi' },
     { path: '/admin/artisans', icon: Users, label: 'Nghệ nhân' },

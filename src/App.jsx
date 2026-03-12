@@ -18,6 +18,7 @@ import AdminProducts from './pages/Admin/AdminProducts';
 import AdminOrders from './pages/Admin/AdminOrders';
 import AdminArtisans from './pages/Admin/AdminArtisans';
 import AdminMessages from './pages/Admin/AdminMessages';
+import AdminCategories from './pages/Admin/AdminCategories';
 import AdminHomeCMS from './pages/Admin/AdminHomeCMS';
 import AdminSettings from './pages/Admin/AdminSettings';
 
@@ -43,6 +44,7 @@ export default function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
+          <Route path="categories" element={<AdminCategories />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="artisans" element={<AdminArtisans />} />
           <Route path="messages" element={<AdminMessages />} />
