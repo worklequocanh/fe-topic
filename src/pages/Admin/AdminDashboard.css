@@ -1,0 +1,268 @@
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Welcome Section */
+.dashboard-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.welcome-text h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 5px;
+}
+
+.welcome-text p {
+  color: #666;
+  font-size: 14px;
+}
+
+.dashboard-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #888;
+  background: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+}
+
+/* Stats Grid */
+.stats-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.stat-card-modern {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card-modern:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.stat-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-icon.revenue { background: #eef2ff; color: #4f46e5; }
+.stat-card-icon.orders { background: #ecfdf5; color: #10b981; }
+.stat-card-icon.products { background: #fff7ed; color: #f59e0b; }
+.stat-card-icon.messages { background: #fef2f2; color: #ef4444; }
+
+.stat-card-info {
+  flex-grow: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.stat-growth {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.stat-growth.positive { color: #10b981; }
+.stat-growth.warning { color: #f59e0b; }
+.stat-growth.neutral { color: #666; }
+.stat-growth small { font-weight: 400; color: #888; margin-left: 2px; }
+
+/* Main Grid Layout */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+}
+
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header-flex h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1a1a1a;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--admin-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ID Badge */
+.id-badge {
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #555;
+}
+
+.status-badge-modern {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Mini Message List */
+.mini-msg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mini-msg-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.mini-msg-item:hover {
+  background: #f8f9fa;
+}
+
+.msg-avatar-initial {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--admin-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.msg-sender {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.msg-snippet {
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread-dot {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Quick Links Grid */
+.quick-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.quick-link-btn {
+  background: #fbfbfc;
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-link-btn:hover {
+  background: white;
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.quick-link-btn span {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.quick-link-btn svg {
+  color: #888;
+  transition: color 0.2s;
+}
+
+.quick-link-btn:hover svg {
+  color: var(--admin-primary);
+}
+
+@media (max-width: 1200px) {
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
