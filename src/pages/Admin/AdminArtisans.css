@@ -1,0 +1,99 @@
+.admin-artisans {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.artisans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.artisan-card-admin {
+  padding: 0 !important;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.artisan-card-admin:hover {
+  transform: translateY(-5px);
+}
+
+.artisan-card-header {
+  height: 120px;
+  background: #f8f9fa;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #eee;
+}
+
+.artisan-image-thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artisan-image-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artisan-actions-quick {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.artisan-card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.artisan-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+}
+
+.artisan-role {
+  font-size: 13px;
+  color: #d4a373;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.artisan-meta-admin {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.artisan-meta-admin span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.artisan-desc-admin {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+  margin: 0;
+}
