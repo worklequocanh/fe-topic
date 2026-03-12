@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Contact.css';
 
 export default function Contact() {
@@ -13,6 +15,7 @@ export default function Contact() {
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // jQuery: scroll reveal
@@ -71,14 +74,28 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setSubmitted(true);
-      // jQuery: success animation
-      $('#contact-form').fadeOut(300, function () {
-        $('#success-message').fadeIn(500);
-      });
+      setLoading(true);
+      try {
+        const contactData = {
+          ...formData,
+          createdAt: serverTimestamp(),
+          status: 'unread'
+        };
+        await addDoc(collection(db, 'contacts'), contactData);
+        setSubmitted(true);
+        // jQuery: success animation
+        $('#contact-form').fadeOut(300, function () {
+          $('#success-message').fadeIn(500);
+        });
+      } catch (error) {
+        console.error("Error saving contact:", error);
+        alert("Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại!");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -246,8 +263,8 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <button type="submit" className="btn-primary contact-submit-btn">
-                    <Send size={16} /> Gửi Tin Nhắn
+                  <button type="submit" className="btn-primary contact-submit-btn" disabled={loading}>
+                    <Send size={16} /> {loading ? 'Đang gửi...' : 'Gửi Tin Nhắn'}
                   </button>
                 </div>
               </form>
