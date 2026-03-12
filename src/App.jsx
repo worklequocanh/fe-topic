@@ -21,6 +21,7 @@ import AdminMessages from './pages/Admin/Messages/AdminMessages';
 import AdminCategories from './pages/Admin/Categories/AdminCategories';
 import AdminHomeCMS from './pages/Admin/CMS/AdminHomeCMS';
 import AdminSettings from './pages/Admin/Settings/AdminSettings';
+import AdminReviews from './pages/Admin/Reviews/AdminReviews';
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="messages" element={<AdminMessages />} />
           <Route path="cms" element={<AdminHomeCMS />} />
           <Route path="settings" element={<AdminSettings />} />
+          <Route path="reviews" element={<AdminReviews />} />
           {/* Placeholder cho các module quản lý khác */}
           <Route path="*" element={<div className="admin-card">Module này đang được phát triển...</div>} />
         </Route>

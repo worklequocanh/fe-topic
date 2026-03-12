@@ -11,7 +11,8 @@ import {
   LogOut,
   Home,
   ChevronRight,
-  Layout
+  Layout,
+  Star
 } from 'lucide-react';
 import './AdminLayout.css';
 
@@ -31,6 +32,7 @@ export default function AdminLayout() {
     { path: '/admin/promotions', icon: Tag, label: 'Khuyến mãi' },
     { path: '/admin/artisans', icon: Users, label: 'Nghệ nhân' },
     { path: '/admin/messages', icon: MessageSquare, label: 'Tin nhắn' },
+    { path: '/admin/reviews', icon: Star, label: 'Đánh giá' },
     { path: '/admin/cms', icon: Layout, label: 'Trang chủ' },
     { path: '/admin/settings', icon: Settings, label: 'Cấu hình' },
   ];
