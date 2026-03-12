@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
+import './HeroBanner.css';
 
 export default function HeroBanner({ banners }) {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -38,33 +39,33 @@ export default function HeroBanner({ banners }) {
   if (!banners || banners.length === 0) return null;
 
   return (
-    <section className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
+    <section className="hero-banner">
       {/* Slides */}
-      <div ref={slideRef} className="relative h-full">
+      <div ref={slideRef} className="hero-slides">
         {banners.map((banner, index) => (
           <div
             key={banner.id}
-            className="absolute inset-0"
+            className="hero-slide"
             style={{
               opacity: index === currentSlide ? 1 : 0,
               zIndex: index === currentSlide ? 1 : 0,
             }}
           >
             {/* Background image */}
-            <div className="absolute inset-0">
+            <div className="hero-slide-bg">
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="w-full h-full object-cover"
+                className="hero-slide-img"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/40 to-transparent" />
+              <div className="hero-slide-overlay" />
             </div>
 
             {/* Content */}
-            <div className="container-custom relative h-full flex items-center z-10">
-              <div className="max-w-lg md:max-w-xl lg:max-w-2xl text-white">
+            <div className="container hero-slide-content-wrap">
+              <div className="hero-slide-content">
                 <h2
-                  className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 lg:mb-8 leading-tight drop-shadow-md text-gradient !bg-gradient-to-r !from-white !to-white/80"
+                  className="hero-title"
                   style={{
                     opacity: index === currentSlide ? 1 : 0,
                     transform: index === currentSlide ? 'translateY(0)' : 'translateY(20px)',
@@ -74,7 +75,7 @@ export default function HeroBanner({ banners }) {
                   {banner.title}
                 </h2>
                 <p
-                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 md:mb-10 lg:mb-12 font-medium tracking-wide drop-shadow-sm"
+                  className="hero-subtitle"
                   style={{
                     opacity: index === currentSlide ? 1 : 0,
                     transform: index === currentSlide ? 'translateY(0)' : 'translateY(20px)',
@@ -85,7 +86,7 @@ export default function HeroBanner({ banners }) {
                 </p>
                 <Link
                   to={banner.link}
-                  className="btn-primary !bg-white !text-charcoal hover:!bg-terracotta hover:!text-white text-sm md:text-base lg:text-lg px-6 md:px-8 py-3 md:py-4"
+                  className="hero-btn"
                   style={{
                     opacity: index === currentSlide ? 1 : 0,
                     transform: index === currentSlide ? 'translateY(0)' : 'translateY(20px)',
@@ -101,16 +102,12 @@ export default function HeroBanner({ banners }) {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className="hero-dots">
         {banners.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? 'bg-white w-8'
-                : 'bg-white/50 hover:bg-white/70'
-            }`}
+            className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
             aria-label={`Slide ${index + 1}`}
           />
         ))}

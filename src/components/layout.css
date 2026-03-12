@@ -1,0 +1,175 @@
+/* --------------------------
+   Layout Component Styles (Pure CSS)
+-------------------------- */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Offset for fixed header (mobile) */
+.layout-main {
+  flex: 1;
+  margin-top: 92px; /* header height on mobile: topbar hidden + main */
+}
+
+@media (min-width: 768px) {
+  .layout-main {
+    margin-top: 116px; /* topbar(30px) + main(86px) */
+  }
+}
+
+/* --------------------------
+   Global Utility: Buttons
+-------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-terracotta);
+  color: var(--color-white);
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-terracotta-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -4px rgba(198, 125, 91, 0.4);
+  color: var(--color-white);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-terracotta);
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border: 2px solid var(--color-terracotta);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-terracotta);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+/* --------------------------
+   Global Utility: Card animations
+-------------------------- */
+.card-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.card-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 24px 48px -12px rgba(61, 53, 48, 0.15);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+}
+
+.card-hover:hover::after {
+  opacity: 1;
+}
+
+/* --------------------------
+   Toast Notification
+-------------------------- */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(2rem);
+  background-color: var(--color-charcoal);
+  color: var(--color-white);
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --------------------------
+   Scroll to top button
+-------------------------- */
+#scroll-to-top {
+  position: fixed;
+  bottom: 6rem;
+  right: 1.5rem;
+  z-index: 40;
+  background-color: var(--color-terracotta);
+  color: var(--color-white);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(198, 125, 91, 0.4);
+}
+
+#scroll-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#scroll-to-top:hover {
+  background-color: var(--color-terracotta-dark);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(198, 125, 91, 0.5);
+}

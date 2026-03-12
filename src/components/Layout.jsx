@@ -4,6 +4,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import { useCart } from '../context/CartContext';
 import $ from 'jquery';
+import './layout.css';
 
 export default function Layout() {
   const { toast } = useCart();
@@ -32,9 +33,9 @@ export default function Layout() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="layout">
       <Header />
-      <main className="flex-1 mt-[60px] md:mt-[92px]">
+      <main className="layout-main">
         <Outlet />
       </main>
       <Footer />
