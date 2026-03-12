@@ -131,7 +131,7 @@ export default function AdminCategories() {
           filteredCategories.map(cat => (
             <div key={cat.id} className="admin-card category-card-admin">
               <div className="category-image-preview">
-                {cat.image ? <img src={cat.image} alt={cat.name} /> : <div className="no-img-placeholder"><ImageIcon size={40} /></div>}
+                {cat.image ? <img src={cat.image || null} alt={cat.name} /> : <div className="no-img-placeholder"><ImageIcon size={40} /></div>}
               </div>
               <div className="category-details-admin">
                 <div className="cat-info-top">

@@ -137,7 +137,7 @@ export default function AdminArtisans() {
             <div key={artisan.id} className="admin-card artisan-card-admin">
               <div className="artisan-card-header">
                 <div className="artisan-image-thumb">
-                  {artisan.avatar ? <img src={artisan.avatar} alt={artisan.name} /> : <User size={24} />}
+                  {artisan.avatar ? <img src={artisan.avatar || null} alt={artisan.name} /> : <User size={24} />}
                 </div>
                 <div className="artisan-actions-quick">
                   <button className="btn-icon" onClick={() => handleOpenModal(artisan)}><Edit2 size={16} /></button>

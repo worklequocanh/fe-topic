@@ -145,7 +145,7 @@ export default function ProductDetail() {
               <div className="pd-main-img-inner">
                 <img
                   id="main-product-image"
-                  src={allImages[selectedImage]}
+                  src={allImages[selectedImage] || null}
                   alt={product.name}
                   className="pd-main-img"
                 />
@@ -160,7 +160,7 @@ export default function ProductDetail() {
                     onClick={() => setSelectedImage(i)}
                     className={`pd-thumbnail-btn ${selectedImage === i ? 'active' : ''}`}
                   >
-                    <img src={img} alt="" className="pd-thumbnail-img" />
+                    <img src={img || null} alt="" className="pd-thumbnail-img" />
                   </button>
                 ))}
               </div>

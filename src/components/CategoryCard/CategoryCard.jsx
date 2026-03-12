@@ -9,7 +9,7 @@ export default function CategoryCard({ category }) {
     >
       <div className="category-card-img-wrap">
         <img
-          src={category.image}
+          src={category.image || null}
           alt={category.name}
           className="category-card-img"
           loading="lazy"

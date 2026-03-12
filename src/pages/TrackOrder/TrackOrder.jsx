@@ -200,7 +200,7 @@ export default function TrackOrder() {
                 <div className="detail-items">
                   {orderDetail.items.map((item, idx) => (
                     <div key={idx} className="detail-product-item">
-                      <img src={item.image} alt={item.name} className="item-img" />
+                      <img src={item.image || null} alt={item.name} className="item-img" />
                       <div className="item-info">
                         <Link to={`/products/${item.slug}`} className="item-name">{item.name}</Link>
                         <span className="item-qty">Số lượng: {item.quantity}</span>

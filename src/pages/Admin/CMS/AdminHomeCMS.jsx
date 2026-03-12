@@ -73,7 +73,7 @@ export default function AdminHomeCMS() {
             {banners.map((banner) => (
               <div key={banner.id} className="admin-card banner-edit-card">
                 <div className="banner-preview-small">
-                  <img src={banner.image} alt={banner.title} />
+                  <img src={banner.image || null} alt={banner.title} />
                 </div>
                 <div className="banner-form-inputs">
                   <input 
@@ -108,7 +108,7 @@ export default function AdminHomeCMS() {
                 onClick={() => handleToggleFeatured(product)}
               >
                 <div className="prod-select-thumb">
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.image || null} alt={product.name} />
                   {product.featured && <div className="featured-check"><Check size={12} /></div>}
                 </div>
                 <p className="prod-select-name">{product.name}</p>

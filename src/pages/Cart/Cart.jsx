@@ -55,7 +55,7 @@ export default function Cart() {
                 {/* Product info */}
                 <div className="cart-item-product">
                   <Link to={`/products/${item.slug}`} className="cart-item-img-link">
-                    <img src={item.image} alt={item.name} className="cart-item-img" />
+                    <img src={item.image || null} alt={item.name} className="cart-item-img" />
                   </Link>
                   <div className="cart-item-info">
                     <Link to={`/products/${item.slug}`} className="cart-item-name">
@@ -153,17 +153,6 @@ export default function Cart() {
               </Link>
 
               {/* Trust badges */}
-              <div className="cart-trust-badges">
-                {[
-                  { icon: Lock, text: 'Thanh toán an toàn' },
-                  { icon: Truck, text: 'Giao hàng nhanh chóng' },
-                  { icon: RefreshCw, text: 'Đổi trả 30 ngày' },
-                ].map(({ icon: Icon, text }) => (
-                  <p key={text} className="cart-trust-badge">
-                    <Icon size={12} className="cart-trust-icon" /> {text}
-                  </p>
-                ))}
-              </div>
             </div>
           </div>
         </div>

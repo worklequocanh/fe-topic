@@ -190,7 +190,7 @@ export default function AdminProducts() {
                     <div className="product-info-cell">
                       <div className="product-thumb">
                         {product.image ? (
-                          <img src={product.image} alt={product.name} />
+                          <img src={product.image || null} alt={product.name} />
                         ) : (
                           <ImageIcon size={20} color="#ccc" />
                         )}

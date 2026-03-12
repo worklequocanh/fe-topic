@@ -175,7 +175,7 @@ export default function Home() {
               <div key={artist.id} className="artist-card">
                 <div className="artist-avatar-wrap">
                   <img
-                    src={artist.avatar}
+                    src={artist.avatar || null}
                     alt={artist.name}
                     className="artist-avatar"
                     loading="lazy"
@@ -210,7 +210,7 @@ export default function Home() {
                   </p>
                   <div className="testimonial-author">
                     <img
-                      src={testimonials[currentTestimonial]?.avatar}
+                      src={testimonials[currentTestimonial]?.avatar || null}
                       alt={testimonials[currentTestimonial]?.name}
                       className="testimonial-avatar"
                     />

@@ -54,7 +54,7 @@ export default function HeroBanner({ banners }) {
             {/* Background image */}
             <div className="hero-slide-bg">
               <img
-                src={banner.image}
+                src={banner.image || null}
                 alt={banner.title}
                 className="hero-slide-img"
               />
