@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCpLQoJwh3hdtlg94KNQbaxrDzjLrnD0z8",
-  authDomain: "artisan-fb.firebaseapp.com",
-  projectId: "artisan-fb",
-  storageBucket: "artisan-fb.firebasestorage.app",
-  messagingSenderId: "905575704635",
-  appId: "1:905575704635:web:84b16013bfbc50a813941e",
-  measurementId: "G-NBTJLVNVWQ"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
