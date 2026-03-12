@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../../context/AdminContext';
 import { Lock, User, ShieldCheck, AlertCircle } from 'lucide-react';
 import './AdminLogin.css';
 

@@ -11,16 +11,16 @@ import TrackOrder from './pages/TrackOrder/TrackOrder';
 
 import { Navigate } from 'react-router-dom';
 import { AdminProvider } from './context/AdminContext';
-import AdminLogin from './pages/Admin/AdminLogin';
-import AdminLayout from './pages/Admin/AdminLayout';
-import AdminDashboard from './pages/Admin/AdminDashboard';
-import AdminProducts from './pages/Admin/AdminProducts';
-import AdminOrders from './pages/Admin/AdminOrders';
-import AdminArtisans from './pages/Admin/AdminArtisans';
-import AdminMessages from './pages/Admin/AdminMessages';
-import AdminCategories from './pages/Admin/AdminCategories';
-import AdminHomeCMS from './pages/Admin/AdminHomeCMS';
-import AdminSettings from './pages/Admin/AdminSettings';
+import AdminLogin from './pages/Admin/Login/AdminLogin';
+import AdminLayout from './pages/Admin/Layout/AdminLayout';
+import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard';
+import AdminProducts from './pages/Admin/Products/AdminProducts';
+import AdminOrders from './pages/Admin/Orders/AdminOrders';
+import AdminArtisans from './pages/Admin/Artisans/AdminArtisans';
+import AdminMessages from './pages/Admin/Messages/AdminMessages';
+import AdminCategories from './pages/Admin/Categories/AdminCategories';
+import AdminHomeCMS from './pages/Admin/CMS/AdminHomeCMS';
+import AdminSettings from './pages/Admin/Settings/AdminSettings';
 
 export default function App() {
   return (

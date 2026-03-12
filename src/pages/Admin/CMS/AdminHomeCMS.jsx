@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '../../firebase';
+import { db } from '../../../firebase';
 import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
 import { 
   Layout, 
@@ -12,7 +12,6 @@ import './AdminHomeCMS.css';
 
 export default function AdminHomeCMS() {
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [banners, setBanners] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -33,7 +32,6 @@ export default function AdminHomeCMS() {
       
       setBanners(bList);
       setAllProducts(pList);
-      setFeaturedProducts(pList.filter(p => p.featured === true));
     } catch (error) {
       console.error("Error fetching CMS data:", error);
     } finally {

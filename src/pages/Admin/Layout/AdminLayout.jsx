@@ -1,5 +1,5 @@
 import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../../context/AdminContext';
 import { 
   LayoutDashboard, 
   Package, 
