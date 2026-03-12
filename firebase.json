@@ -6,11 +6,5 @@
     "indexes": "firebase/firestore.indexes.json"
   },
   "emulators": {
-    "dataconnect": {
-      "dataDir": "dataconnect/.dataconnect/pgliteData"
-    }
-  },
-  "dataconnect": {
-    "source": "dataconnect"
   }
 }
