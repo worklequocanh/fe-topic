@@ -68,7 +68,11 @@ export default function Home() {
         ]);
 
         setBanners(bannersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setCategories(categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        
+        const fetchedCategories = categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const uniqueCategories = Array.from(new Map(fetchedCategories.map(item => [item.slug, item])).values());
+        setCategories(uniqueCategories);
+        
         setFeaturedProducts(productsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         setArtists(artistsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         setTestimonials(testimonialsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));

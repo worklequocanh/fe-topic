@@ -31,7 +31,11 @@ export default function Products() {
           getDocs(collection(db, 'categories')),
         ]);
         setProducts(productsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setCategories(categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        
+        const fetchedCategories = categoriesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Deduplicate by slug
+        const uniqueCategories = Array.from(new Map(fetchedCategories.map(item => [item.slug, item])).values());
+        setCategories(uniqueCategories);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -208,7 +212,7 @@ export default function Products() {
                   </button>
                   {categories.map(cat => (
                     <button
-                      key={cat.slug}
+                      key={cat.id}
                       onClick={() => handleCategoryChange(cat.slug)}
                       className={`filter-option-btn ${selectedCategory === cat.slug ? 'active' : ''}`}
                     >
