@@ -6,6 +6,8 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Cart from './pages/Cart/Cart';
 import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
+import Checkout from './pages/Checkout/Checkout';
+import TrackOrder from './pages/TrackOrder/TrackOrder';
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
         <Route path="products" element={<Products />} />
         <Route path="products/:slug" element={<ProductDetail />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="track-order" element={<TrackOrder />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
       </Route>

@@ -1,0 +1,256 @@
+/* --------------------------
+   Contact Page Styles (Pure CSS)
+-------------------------- */
+
+/* Hero */
+.contact-hero {
+  background-color: var(--color-warm-beige);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .contact-hero {
+    padding: 3rem 0;
+  }
+}
+
+.contact-hero-title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-charcoal);
+}
+
+@media (min-width: 768px) {
+  .contact-hero-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+.contact-hero-divider {
+  width: 4rem;
+  height: 2px;
+  background-color: var(--color-terracotta);
+  margin: 1rem auto 1.5rem;
+}
+
+.contact-hero-desc {
+  color: var(--color-taupe);
+  line-height: 1.6;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+/* Layout */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .contact-layout {
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+  }
+}
+
+/* Info section */
+.contact-info-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.contact-info-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.contact-info-icon-wrap {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(198, 125, 91, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-info-icon {
+  color: var(--color-terracotta);
+}
+
+.contact-info-key {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  margin-bottom: 0.125rem;
+}
+
+.contact-info-value {
+  font-size: 0.875rem;
+  color: var(--color-taupe);
+}
+
+/* Map */
+.contact-map-wrap {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(212, 197, 178, 0.3);
+  height: 12rem;
+}
+
+@media (min-width: 768px) {
+  .contact-map-wrap {
+    height: 16rem;
+  }
+}
+
+/* Form */
+.contact-form-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  margin-bottom: 1.5rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 576px) {
+  .contact-form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.contact-field {
+}
+
+.contact-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-charcoal);
+  margin-bottom: 0.25rem;
+}
+
+.contact-required {
+  color: var(--color-terracotta);
+}
+
+.contact-input,
+.contact-textarea {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-sand);
+  border-radius: 0.75rem;
+  background-color: var(--color-white);
+  color: var(--color-charcoal);
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-input::placeholder,
+.contact-textarea::placeholder {
+  color: rgba(139, 125, 107, 0.5);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+  box-shadow: 0 0 0 2px rgba(198, 125, 91, 0.15);
+}
+
+.contact-input.has-error,
+.contact-textarea.has-error {
+  border-color: #f87171;
+}
+
+.contact-input.has-error:focus,
+.contact-textarea.has-error:focus {
+  box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.2);
+}
+
+.contact-textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.contact-error {
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 0.25rem;
+}
+
+/* Submit */
+.contact-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Success */
+.contact-success {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.contact-success-icon {
+  color: var(--color-olive);
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+.contact-success-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-charcoal);
+  margin-bottom: 0.75rem;
+}
+
+.contact-success-desc {
+  color: var(--color-taupe);
+  margin-bottom: 1.5rem;
+}
+
+/* Scroll reveal for contact */
+.contact-reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.contact-reveal.animate-fade-in-up {
+  opacity: 1;
+  transform: translateY(0);
+}

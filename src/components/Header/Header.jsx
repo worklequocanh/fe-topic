@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import { Search, ShoppingBag, Menu, X, Heart } from 'lucide-react';
 import $ from 'jquery';
 
@@ -9,6 +9,7 @@ import './Header.css';
 const navLinks = [
   { path: '/', label: 'Trang Chủ' },
   { path: '/products', label: 'Sản Phẩm' },
+  { path: '/track-order', label: 'Tra Cứu' },
   { path: '/about', label: 'Về Chúng Tôi' },
   { path: '/contact', label: 'Liên Hệ' },
 ];
