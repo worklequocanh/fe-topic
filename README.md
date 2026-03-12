@@ -1,66 +1,59 @@
 # ArtisanVN - Tinh Hoa Nghệ Thuật Thủ Công Việt Nam
 
-ArtisanVN là một nền tảng thương mại điện tử hiện đại dành riêng cho các sản phẩm thủ công mỹ nghệ cao cấp từ các làng nghề truyền thống Việt Nam. Dự án được xây dựng với trải nghiệm người dùng cao cấp, hình ảnh AI sống động và hệ thống quản lý dữ liệu mạnh mẽ dựa trên Firebase.
+ArtisanVN là một nền tảng thương mại điện tử (E-commerce) cao cấp, được thiết kế để tôn vinh và đưa các sản phẩm thủ công mỹ nghệ tinh xảo từ các làng nghề truyền thống Việt Nam đến gần hơn với khách hàng hiện đại. Dự án kết hợp công nghệ web tiên tiến với sức mạnh của AI để tạo ra một trải nghiệm mua sắm sang trọng, đồng nhất và tin cậy.
 
-## 🚀 Tính Năng Nổi Bật
+## 🚀 Tính Năng Chính
 
-### 🎨 Trải Nghiệm Người Dùng & Thiết Kế
-- **Giao diện Premium:** Sử dụng phong cách thiết kế hiện đại, tối giản, tập trung vào việc tôn vinh vẻ đẹp của sản phẩm.
-- **Hình ảnh AI sống động:** Toàn bộ tư liệu hình ảnh (Banners, Categories, Products) được tạo bởi AI Gemini, đảm bảo tính thẩm mỹ, nhất quán và độc quyền.
-- **Hiệu ứng mượt mà:** Sử dụng các hiệu ứng micro-animations, glassmorphism và jQuery để tạo cảm giác sang trọng.
+### 💎 Trải Nghiệm Mua Sắm (Frontend)
+- **Giao diện Premium:** Thiết kế Mobile-first, phong cách hiện đại với hiệu ứng mượt mà (Glassmorphism, Micro-animations).
+- **Hình ảnh AI-Generated:** Toàn bộ tư liệu hình ảnh được tạo bởi AI Gemini, đảm bảo tính thẩm mỹ cao và sự nhất quán trên toàn hệ thống.
+- **Giỏ hàng Thông minh:** Tự động tính toán phí vận chuyển, áp dụng voucher và quản lý trạng thái giỏ hàng thời gian thực.
+- **Thanh toán & Tra cứu:** Quy trình Checkout tối giản và hệ thống tra cứu đơn hàng linh hoạt theo **Mã đơn** hoặc **Số điện thoại**.
 
-### 📦 Quản Lý Sản Phẩm & Giỏ Hàng
-- **Phân loại danh mục:** Gốm sứ, Tranh vẽ, Đồ gỗ, Trang sức.
-- **Chi tiết sản phẩm:** Cung cấp thông tin chi tiết về nghệ nhân, chất liệu, kích thước và đánh giá từ khách hàng.
-- **Giỏ hàng linh hoạt:** Quản lý số lượng, tính toán phí vận chuyển thông minh (Miễn phí từ đơn 2.000.000đ).
+### 🛠 Hệ Thống Quản Trị (Admin Dashboard)
+- **Tổng quan Kinh doanh:** Dashboard thống kê doanh thu, đơn hàng, sản phẩm và tin nhắn chờ xử lý với biểu đồ trực quan.
+- **Quản lý Sản phẩm & Danh mục:** Hệ thống CRUD (Thêm, Sửa, Xóa) mạnh mẻ, hỗ trợ quản lý kho và phân loại sản phẩm.
+- **Quản lý Nghệ nhân:** Tôn vinh và quản lý thông tin các nghệ nhân - những người tạo ra linh hồn cho sản phẩm.
+- **Điều phối Đơn hàng:** Theo dõi và cập nhật trạng thái đơn hàng (Confirmed, Shipping, Completed...).
+- **Quản lý Phản hồi & Đánh giá:** Phê duyệt/Ẩn các đánh giá từ khách hàng và quản lý tin nhắn liên hệ tập trung.
+- **CMS Trang chủ:** Linh hoạt chỉnh sửa các banner slide và danh sách sản phẩm nổi bật trực tiếp từ admin.
 
-### 💳 Thanh Toán & Tra Cứu Đơn Hàng (MỚI)
-- **Checkout nhanh chóng:** Quy trình thanh toán đơn giản, lưu trữ trực tiếp vào Firebase Firestore.
-- **Tra cứu đơn hàng thông minh:** 
-  - Tra cứu theo **Mã đơn hàng** để xem chi tiết tình trạng.
-  - Tra cứu theo **Số điện thoại** để xem danh sách toàn bộ lịch sử mua hàng.
-- **Quản lý trạng thái:** Hệ thống cập nhật trạng thái đơn hàng (Pending, Confirmed, Shipping, Completed, Cancelled).
+## 🧱 Công Nghệ & Kiến Trúc
 
-## 🛠 Công Nghệ Sử Dụng
+- **Core:** React 18, Vite, React Router 6.
+- **Database & Auth:** Firebase Firestore, Firebase Authentication.
+- **Styling:** Modern Vanilla CSS (Không dùng thư viện utility giúp mã nguồn sạch và tốc độ tải trang nhanh).
+- **Assets:** Lucide icons, Google Fonts (Outfit, Inter).
+- **Tooling:** Git (via WSL), AI Gemini (Design & Content).
 
-- **Frontend:** React.js, Vite, React Router 6.
-- **Styling:** Vanilla CSS (Bố cục hiện đại, Mobile-friendly).
-- **Backend & Database:** Firebase Firestore.
-- **Icons:** Lucide-react.
-- **Thư viện bổ trợ:** jQuery (cho sticky header & animations).
-- **AI Tooling:** Gemini Banana (Generation tư liệu hình ảnh).
+## 📂 Tổ Chức Thư Mục
 
-## 📥 Hướng Dẫn Cài Đặt
+```text
+src/
+├── pages/
+│   ├── Admin/          # Dashboard quản trị (Phân chia theo Module)
+│   ├── Main/           # Các trang chính (Home, Shop, Project...)
+│   └── User/           # Checkout, Tracking...
+├── context/            # Quản lý State toàn cục (Cart, Admin)
+├── assets/             # Biểu tượng, font chữ
+└── firebase/           # Cấu hình Firestore & Seeding data
+```
 
-1. **Clone project:**
-   ```bash
-   git clone [link-repo]
-   cd fe-topic
-   ```
+## 📥 Cài Đặt & Chạy
 
-2. **Cài đặt dependencies:**
+1. **Cài đặt dự án:**
    ```bash
    npm install
    ```
 
-3. **Cấu hình Firebase:**
-   - Tạo file `src/firebase.js` và dán cấu hình Firebase SDK của bạn vào.
+2. **Cấu hình Môi trường:** Tạo file `.env` với cấu hình Firebase (Xem mẫu trong tài liệu nội bộ).
 
-4. **Khởi tạo dữ liệu mẫu (Seeding):**
-   - Chạy ứng dụng (`npm run dev`).
-   - Truy cập URL: `http://localhost:5173/?reseed=true` để tự động đẩy dữ liệu mẫu và hình ảnh AI lên Firestore.
-
-5. **Chạy ứng dụng:**
+3. **Chạy ứng dụng:**
    ```bash
    npm run dev
    ```
 
-## 📂 Cấu trúc thư mục chính
-
-- `src/firebase/`: Chứa cấu hình kết nối và logic đẩy dữ liệu mẫu (`seedData.js`).
-- `src/context/`: Quản lý trạng thái giỏ hàng (`CartContext.js`).
-- `src/pages/`: Chứa các trang chính (Home, Products, Checkout, TrackOrder...).
-- `public/images/`: Toàn bộ kho ảnh AI được phân loại theo thư mục (banners, categories, products, team).
+4. **Reseed dữ liệu (nếu cần):** Thêm query `?reseed=true` vào URL trang chủ để khởi tạo dữ liệu mẫu lên Firestore.
 
 ---
 © 2024 **ArtisanVN Team** - Vì một nền thủ công Việt vươn tầm thế giới.
