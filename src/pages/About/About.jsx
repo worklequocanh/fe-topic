@@ -20,8 +20,13 @@ export default function About() {
           getDocs(collection(db, 'values')),
         ]);
         
-        setTeam(teamSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setValues(valuesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        const fetchedTeam = teamSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const uniqueTeam = Array.from(new Map(fetchedTeam.map(item => [item.name, item])).values());
+        setTeam(uniqueTeam);
+
+        const fetchedValues = valuesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const uniqueValues = Array.from(new Map(fetchedValues.map(item => [item.title, item])).values());
+        setValues(uniqueValues);
       } catch (error) {
         console.error('Error fetching About data from Firebase:', error);
       } finally {
@@ -127,7 +132,7 @@ export default function About() {
             {values.map(v => {
               const ValueIcon = LucideIcons[v.icon] || LucideIcons.HelpCircle;
               return (
-                <div key={v.title} className="about-value-card">
+                <div key={v.id} className="about-value-card">
                   <div className="about-value-icon-wrap">
                     <ValueIcon size={32} className="about-value-icon" />
                   </div>
@@ -151,7 +156,7 @@ export default function About() {
 
           <div className="about-team-grid about-reveal">
             {team.map(member => (
-              <div key={member.name} className="about-team-card">
+              <div key={member.id} className="about-team-card">
                 <div className="about-team-img-wrap">
                   <img
                     src={member.image}

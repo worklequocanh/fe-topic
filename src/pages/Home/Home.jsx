@@ -74,8 +74,14 @@ export default function Home() {
         setCategories(uniqueCategories);
         
         setFeaturedProducts(productsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setArtists(artistsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        setTestimonials(testimonialsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        
+        const fetchedArtists = artistsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const uniqueArtists = Array.from(new Map(fetchedArtists.map(item => [item.name, item])).values());
+        setArtists(uniqueArtists);
+        
+        const fetchedTestimonials = testimonialsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const uniqueTestimonials = Array.from(new Map(fetchedTestimonials.map(item => [item.name, item])).values());
+        setTestimonials(uniqueTestimonials);
       } catch (error) {
         console.error('Error fetching data from Firebase:', error);
       } finally {
