@@ -22,6 +22,7 @@ import AdminCategories from './pages/Admin/Categories/AdminCategories';
 import AdminHomeCMS from './pages/Admin/CMS/AdminHomeCMS';
 import AdminSettings from './pages/Admin/Settings/AdminSettings';
 import AdminReviews from './pages/Admin/Reviews/AdminReviews';
+import NotFound from './pages/NotFound/NotFound';
 
 export default function App() {
   return (
@@ -55,6 +56,9 @@ export default function App() {
           {/* Placeholder cho các module quản lý khác */}
           <Route path="*" element={<div className="admin-card">Module này đang được phát triển...</div>} />
         </Route>
+
+        {/* Catch-all 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AdminProvider>
   );
